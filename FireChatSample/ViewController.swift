@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "LogOut", style: .Plain, target: self, action: #selector(ViewController.handleLogOut))
     }
