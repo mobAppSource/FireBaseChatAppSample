@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LogInVC: UIViewController {
 
@@ -20,16 +21,48 @@ class LogInVC: UIViewController {
         return view
     }()
     
-    let loginRegisterBtn: UIButton = {
+    lazy var loginRegisterBtn: UIButton = {
         let button = UIButton(type: .System)
         button.backgroundColor = UIColor(r: 80, g: 101, b: 161, alpha: 1)
         button.setTitle("Register", forState: .Normal)
         button.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleLabel?.font = UIFont.boldSystemFontOfSize(17)
+        
+        button.addTarget(self, action: #selector(LogInVC.actionRegister), forControlEvents: .TouchUpInside)
         return button
     }()
-    
+    //action for button
+    func actionRegister(){
+        guard let email = emailTextField.text, password = passwdTextField.text, name = nameTextField.text else {
+            print("Form is not valid")
+            return
+        }
+        print("Email: Password = \(email): \(password)")
+        FIRAuth.auth()?.createUserWithEmail(email, password: password, completion: { (user: FIRUser?, error: NSError?) in
+            if error != nil{
+                print(error!.localizedDescription)
+                
+                return
+            }
+            //Successfully authenticated user
+            guard let uid = user?.uid else{
+                return
+            }
+            
+            let ref = FIRDatabase.database().referenceFromURL("https://firechatsample-fcdee.firebaseio.com/")
+            let userReference = ref.child("users").child(uid)
+            let values = ["name": name, "email": email]
+            userReference.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                if error != nil{
+                    print(error!.localizedDescription)
+                    return
+                }
+                print("Saved user successfully into FireBase Database")
+            })
+            
+        })
+    }
     let nameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Name"
