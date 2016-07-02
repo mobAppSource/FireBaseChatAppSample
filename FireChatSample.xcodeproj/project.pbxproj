@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		AF9567701D284E03007949B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF95676F1D284E03007949B9 /* AppDelegate.swift */; };
 		AF9567721D284E03007949B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9567711D284E03007949B9 /* ViewController.swift */; };
-		AF9567751D284E03007949B9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF9567731D284E03007949B9 /* Main.storyboard */; };
 		AF9567771D284E03007949B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF9567761D284E03007949B9 /* Assets.xcassets */; };
 		AF95677A1D284E03007949B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF9567781D284E03007949B9 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -18,7 +17,6 @@
 		AF95676C1D284E03007949B9 /* FireChatSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FireChatSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF95676F1D284E03007949B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AF9567711D284E03007949B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AF9567741D284E03007949B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AF9567761D284E03007949B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF9567791D284E03007949B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF95677B1D284E03007949B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,7 +54,6 @@
 			children = (
 				AF95676F1D284E03007949B9 /* AppDelegate.swift */,
 				AF9567711D284E03007949B9 /* ViewController.swift */,
-				AF9567731D284E03007949B9 /* Main.storyboard */,
 				AF9567761D284E03007949B9 /* Assets.xcassets */,
 				AF9567781D284E03007949B9 /* LaunchScreen.storyboard */,
 				AF95677B1D284E03007949B9 /* Info.plist */,
@@ -124,7 +121,6 @@
 			files = (
 				AF95677A1D284E03007949B9 /* LaunchScreen.storyboard in Resources */,
 				AF9567771D284E03007949B9 /* Assets.xcassets in Resources */,
-				AF9567751D284E03007949B9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,14 +139,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		AF9567731D284E03007949B9 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AF9567741D284E03007949B9 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		AF9567781D284E03007949B9 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -199,7 +187,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -239,7 +227,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -252,6 +240,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = FireChatSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iCloudTest.FireChatSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -263,6 +252,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = FireChatSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.iCloudTest.FireChatSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
