@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		568AE2CF71CC160F6AFAF1B9 /* Pods_FireChatSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8363E002F620CCA55ACCEB1B /* Pods_FireChatSample.framework */; };
 		AF9567701D284E03007949B9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF95676F1D284E03007949B9 /* AppDelegate.swift */; };
-		AF9567721D284E03007949B9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9567711D284E03007949B9 /* ViewController.swift */; };
+		AF9567721D284E03007949B9 /* MsgController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9567711D284E03007949B9 /* MsgController.swift */; };
 		AF9567771D284E03007949B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF9567761D284E03007949B9 /* Assets.xcassets */; };
 		AF95677A1D284E03007949B9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF9567781D284E03007949B9 /* LaunchScreen.storyboard */; };
 		AF9567821D2850F0007949B9 /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9567811D2850F0007949B9 /* LogInVC.swift */; };
 		AF9567851D2852EA007949B9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9567841D2852EA007949B9 /* Extensions.swift */; };
 		AF9567871D286A16007949B9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF9567861D286A16007949B9 /* GoogleService-Info.plist */; };
+		AF9567891D2889EB007949B9 /* NewMsgController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9567881D2889EB007949B9 /* NewMsgController.swift */; };
+		AF95678B1D288DB3007949B9 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF95678A1D288DB3007949B9 /* UserModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,13 +24,15 @@
 		8363E002F620CCA55ACCEB1B /* Pods_FireChatSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FireChatSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF95676C1D284E03007949B9 /* FireChatSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FireChatSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF95676F1D284E03007949B9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AF9567711D284E03007949B9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AF9567711D284E03007949B9 /* MsgController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgController.swift; sourceTree = "<group>"; };
 		AF9567761D284E03007949B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AF9567791D284E03007949B9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AF95677B1D284E03007949B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AF9567811D2850F0007949B9 /* LogInVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
 		AF9567841D2852EA007949B9 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AF9567861D286A16007949B9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AF9567881D2889EB007949B9 /* NewMsgController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMsgController.swift; sourceTree = "<group>"; };
+		AF95678A1D288DB3007949B9 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		F9329C6D02BB07CA9B2AFED0 /* Pods-FireChatSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireChatSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-FireChatSample/Pods-FireChatSample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,6 +80,7 @@
 			children = (
 				AF95676F1D284E03007949B9 /* AppDelegate.swift */,
 				AF9567841D2852EA007949B9 /* Extensions.swift */,
+				AF95678C1D288DB8007949B9 /* Models */,
 				AF9567831D2850F8007949B9 /* Controller */,
 				AF9567761D284E03007949B9 /* Assets.xcassets */,
 				AF9567781D284E03007949B9 /* LaunchScreen.storyboard */,
@@ -88,10 +93,19 @@
 		AF9567831D2850F8007949B9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				AF9567711D284E03007949B9 /* ViewController.swift */,
+				AF9567711D284E03007949B9 /* MsgController.swift */,
+				AF9567881D2889EB007949B9 /* NewMsgController.swift */,
 				AF9567811D2850F0007949B9 /* LogInVC.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		AF95678C1D288DB8007949B9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AF95678A1D288DB3007949B9 /* UserModel.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		EEBABE36CDE07BADADC9B7E0 /* Frameworks */ = {
@@ -224,10 +238,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF9567721D284E03007949B9 /* ViewController.swift in Sources */,
+				AF9567721D284E03007949B9 /* MsgController.swift in Sources */,
 				AF9567701D284E03007949B9 /* AppDelegate.swift in Sources */,
 				AF9567821D2850F0007949B9 /* LogInVC.swift in Sources */,
 				AF9567851D2852EA007949B9 /* Extensions.swift in Sources */,
+				AF95678B1D288DB3007949B9 /* UserModel.swift in Sources */,
+				AF9567891D2889EB007949B9 /* NewMsgController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
