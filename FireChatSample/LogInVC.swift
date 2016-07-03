@@ -76,12 +76,17 @@ class LogInVC: UIViewController {
     }
     //action for login
     func actionLogin(){
+        //displaying the spinner
+        spinner.showWaitingScreen("Logging in...", bShowText: true, size: CGSizeMake(150, 100))
         guard let email = emailTextField.text, password = passwdTextField.text else{
             print("Form is not valid")
             return
         }
         
         FIRAuth.auth()?.signInWithEmail(email, password: password, completion: { (user: FIRUser?, error: NSError?) in
+            dispatch_async(dispatch_get_main_queue(), { 
+                spinner.hideWaitingScreen()
+            })
             if error != nil{
                 print(error?.localizedDescription)
                 return
@@ -91,12 +96,16 @@ class LogInVC: UIViewController {
     }
     //action for registering
     func actionRegister(){
+        spinner.showWaitingScreen("Registering...", bShowText: true, size: CGSizeMake(150, 100))
+        
         guard let email = emailTextField.text, password = passwdTextField.text, name = nameTextField.text else {
+            spinner.hideWaitingScreen()
             print("Form is not valid")
             return
         }
         print("Email: Password = \(email): \(password)")
         FIRAuth.auth()?.createUserWithEmail(email, password: password, completion: { (user: FIRUser?, error: NSError?) in
+            
             if error != nil{
                 print(error!.localizedDescription)
                 
@@ -111,6 +120,11 @@ class LogInVC: UIViewController {
             let userReference = ref.child("users").child(uid)
             let values = ["name": name, "email": email]
             userReference.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    spinner.hideWaitingScreen()
+                })
+                
                 if error != nil{
                     print(error!.localizedDescription)
                     return

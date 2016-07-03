@@ -14,6 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    let TAG_WAIT_SCREEN_VIEW = 1025
+    let TAG_WAIT_SCREEN_INDICATOR = 1026
+    let TAG_WAIT_SCREEN_LABEL = 1027
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -47,7 +50,75 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    // MARK: - ActivityIndicatorView
+    func showWaitingScreen(strText:NSString, bShowText:Bool, size:CGSize)
+    {
+        let view = UIView(frame:CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height))
+        view.tag = TAG_WAIT_SCREEN_VIEW
+        view.backgroundColor = UIColor.clearColor()
+        view.alpha = 1.0
+        
+        if (bShowText) {
+            let subView = UIView()
+            subView.backgroundColor = UIColor.blackColor()
+            subView.alpha = 0.7
+            
+            var width = size.width
+            var height = size.height
+            
+            subView.frame = CGRectMake(view.frame.size.width/2-width/2, view.frame.size.height/2-height/2, width, height)
+            
+            let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+            indicatorView.tag = TAG_WAIT_SCREEN_INDICATOR
+            let rectIndicatorViewFrame = indicatorView.frame
+            
+            width = rectIndicatorViewFrame.size.width
+            height = rectIndicatorViewFrame.size.height
+            
+            indicatorView.frame = CGRectMake(subView.frame.size.width/2-width/2, subView.frame.size.height/3-width/2, width, height)
+            
+            indicatorView.startAnimating()
+            subView.addSubview(indicatorView)
+            
+            let label = UILabel(frame:CGRectMake(0, subView.frame.size.height * 1.6/3, subView.frame.size.width, subView.frame.size.height/3))
+            label.text = strText as String
+            
+            label.backgroundColor = UIColor.clearColor()
+            label.textAlignment = NSTextAlignment.Center
+            
+            label.textColor = UIColor.whiteColor()
+            label.tag = TAG_WAIT_SCREEN_LABEL
+            
+            label.font = UIFont.systemFontOfSize(14)
+            
+            subView.addSubview(label)
+            subView.layer.cornerRadius = 10.0//  = [Common roundCornersOnView:subView onTopLeft:YES topRight:YES bottomLeft:YES bottomRight:YES radius:10.0f]
+            
+            view.addSubview(subView)
+        }
+        
+        window!.addSubview(view)
+    }
+    
+    func hideWaitingScreen() {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            let view = self.window!.viewWithTag(self.TAG_WAIT_SCREEN_VIEW)
+            
+            if (view != nil) {
+                let indicatorView = view?.viewWithTag(self.TAG_WAIT_SCREEN_INDICATOR)
+                
+                if (indicatorView != nil){
+                    (indicatorView as! UIActivityIndicatorView).stopAnimating()
+                }
+                view!.removeFromSuperview()
+                
+                let label = view!.viewWithTag(self.TAG_WAIT_SCREEN_LABEL)
+                if (label != nil) {
+                    label!.removeFromSuperview()
+                }
+            }
+        })
+    }
 
 }
 
