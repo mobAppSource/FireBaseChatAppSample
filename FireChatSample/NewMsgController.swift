@@ -27,19 +27,23 @@ class NewMsgController: UITableViewController {
     //fetching the users from firebase's database
     func fetchingUsers()
     {
-        FIRDatabase.database().reference().child("users").observeEventType(FIRDataEventType.ChildAdded,
-                                                                                   withBlock: {
-                                                                                    (snapshots: FIRDataSnapshot) in
-                                                                                    
-                                                                                    if let dict = snapshots.value as? [String: AnyObject]{
-                                                                                        let user = UserModel()
-                                                                                        user.setValuesForKeysWithDictionary(dict)
-                                                                                        self.users.append(user)
-                                                                                    }
-                                                                                    dispatch_async(dispatch_get_main_queue(), { 
-                                                                                        self.tableView.reloadData()
-                                                                                    })
-                                                                                    }, withCancelBlock: nil)
+        //displaying the spinner
+        spinner.showWaitingScreen("Fetching users...", bShowText: true, size: CGSizeMake(150, 100))
+        FIRDatabase.database().reference().child("users").observeEventType(FIRDataEventType.ChildAdded, withBlock: {
+            (snapshots: FIRDataSnapshot) in
+            
+            if let dict = snapshots.value as? [String: AnyObject]{
+                let user = UserModel()
+                user.setValuesForKeysWithDictionary(dict)
+                self.users.append(user)
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableView.reloadData()
+                spinner.hideWaitingScreen()
+            })
+            
+            }, withCancelBlock: nil)
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -56,6 +60,9 @@ class NewMsgController: UITableViewController {
         cell.textLabel?.text = self.users[indexPath.row].name
         cell.detailTextLabel?.text = self.users[indexPath.row].email
         return cell
+    }
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 60
     }
     
     

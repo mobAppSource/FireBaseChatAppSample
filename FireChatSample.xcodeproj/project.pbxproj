@@ -17,6 +17,7 @@
 		AF9567871D286A16007949B9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AF9567861D286A16007949B9 /* GoogleService-Info.plist */; };
 		AF9567891D2889EB007949B9 /* NewMsgController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9567881D2889EB007949B9 /* NewMsgController.swift */; };
 		AF95678B1D288DB3007949B9 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF95678A1D288DB3007949B9 /* UserModel.swift */; };
+		AF95678E1D289912007949B9 /* MainParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF95678D1D289912007949B9 /* MainParameters.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		AF9567861D286A16007949B9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AF9567881D2889EB007949B9 /* NewMsgController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMsgController.swift; sourceTree = "<group>"; };
 		AF95678A1D288DB3007949B9 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		AF95678D1D289912007949B9 /* MainParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainParameters.swift; sourceTree = "<group>"; };
 		F9329C6D02BB07CA9B2AFED0 /* Pods-FireChatSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FireChatSample.release.xcconfig"; path = "Pods/Target Support Files/Pods-FireChatSample/Pods-FireChatSample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				AF95676F1D284E03007949B9 /* AppDelegate.swift */,
+				AF95678D1D289912007949B9 /* MainParameters.swift */,
 				AF9567841D2852EA007949B9 /* Extensions.swift */,
 				AF95678C1D288DB8007949B9 /* Models */,
 				AF9567831D2850F8007949B9 /* Controller */,
@@ -240,6 +243,7 @@
 			files = (
 				AF9567721D284E03007949B9 /* MsgController.swift in Sources */,
 				AF9567701D284E03007949B9 /* AppDelegate.swift in Sources */,
+				AF95678E1D289912007949B9 /* MainParameters.swift in Sources */,
 				AF9567821D2850F0007949B9 /* LogInVC.swift in Sources */,
 				AF9567851D2852EA007949B9 /* Extensions.swift in Sources */,
 				AF95678B1D288DB3007949B9 /* UserModel.swift in Sources */,
