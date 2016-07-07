@@ -89,6 +89,8 @@ class UserCell: UITableViewCell{
         imgView.layer.cornerRadius = 24
         imgView.layer.masksToBounds = true
         imgView.contentMode = .ScaleAspectFill
+        imgView.layer.borderWidth = 1
+        imgView.layer.borderColor = UIColor.blueColor().CGColor
           
         return imgView
     }()

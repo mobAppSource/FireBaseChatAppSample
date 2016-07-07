@@ -114,7 +114,11 @@ extension LogInVC: UIImagePickerControllerDelegate, UINavigationControllerDelega
             }
             print("Saved user successfully into FireBase Database")
 //            self.messageController?.fetchUserAndSetupNavBarTitle()
-            self.messageController?.navigationItem.title = values["name"] as? String
+//            self.messageController?.navigationItem.title = values["name"] as? String
+            let user = UserModel()
+            user.setValuesForKeysWithDictionary(values)
+            self.messageController?.setupNavBarWithUser(user)
+            
             self.dismissViewControllerAnimated(true, completion: nil)
         })
     }
