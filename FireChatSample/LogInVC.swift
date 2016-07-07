@@ -11,6 +11,9 @@ import Firebase
 
 class LogInVC: UIViewController {
 
+    //for display the navigation controller bar title
+    var messageController: MsgController?
+    
     //Login and register segment
     lazy var loginRegisterSegmentedControl: UISegmentedControl = {
         let sc = UISegmentedControl(items: ["Login", "Register"])

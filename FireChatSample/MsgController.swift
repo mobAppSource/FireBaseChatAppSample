@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 
 class MsgController: UITableViewController {
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,30 +38,38 @@ class MsgController: UITableViewController {
         if FIRAuth.auth()?.currentUser?.uid == nil{
             performSelector(#selector(handleLogOut), withObject: nil, afterDelay: 0)
         }else{
-            let uid = FIRAuth.auth()?.currentUser?.uid
-            FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(FIRDataEventType.Value, withBlock: {
-                (snapshot) in
-                dispatch_async(dispatch_get_main_queue(), {
-                    spinner.hideWaitingScreen()
-                })
-                
-                if let dict = snapshot.value as? [String: AnyObject]{
-                    self.navigationItem.title = dict["name"] as? String
-                    print("Name: \(dict["name"])")
-                }
-                
-                }, withCancelBlock: { (error) in
-                    print(error.localizedDescription)
-            })
-            
+            self.fetchUserAndSetupNavBarTitle()
         }
     }
+    //
+    func fetchUserAndSetupNavBarTitle(){
+        guard let uid = FIRAuth.auth()?.currentUser?.uid else{
+            // for some reason uid = nil
+            return
+        }
+        FIRDatabase.database().reference().child("users").child(uid).observeSingleEventOfType(FIRDataEventType.Value, withBlock: {
+            (snapshot) in
+            dispatch_async(dispatch_get_main_queue(), {
+                spinner.hideWaitingScreen()
+            })
+            
+            if let dict = snapshot.value as? [String: AnyObject]{
+                self.navigationItem.title = dict["name"] as? String
+                print("Name: \(dict["name"])")
+            }
+            
+            }, withCancelBlock: { (error) in
+                print(error.localizedDescription)
+        })
+    }
+    
     func handleLogOut()
     {
         do{
             try FIRAuth.auth()?.signOut()
             spinner.hideWaitingScreen()
             let loginView = LogInVC()
+            loginView.messageController = self
             presentViewController(loginView, animated: true, completion: nil)
         }catch let logoutError{
             print(logoutError)
