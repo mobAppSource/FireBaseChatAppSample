@@ -55,27 +55,64 @@ class NewMsgController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
 //        let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellID)
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! UserCell
+        let user = users[indexPath.row]
+        cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
         
-        cell.textLabel?.text = self.users[indexPath.row].name
-        cell.detailTextLabel?.text = self.users[indexPath.row].email
+        if let profileImgUrl = user.profileImageUrl{
+            cell.profileImageView.loadImageCacheWithURLString(profileImgUrl)
+        }
+        
+        
         return cell
     }
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+        return 72
     }
     
     
 }
 //TableViewCell
 class UserCell: UITableViewCell{
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        textLabel?.frame = CGRectMake(64, textLabel!.frame.origin.y - 2, textLabel!.frame.width, textLabel!.frame.height)
+        detailTextLabel?.frame = CGRectMake(64, detailTextLabel!.frame.origin.y + 2, detailTextLabel!.frame.width, detailTextLabel!.frame.height)
+    }
+    
+    
+    let profileImageView: UIImageView = {
+        let imgView = UIImageView()
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.layer.cornerRadius = 24
+        imgView.layer.masksToBounds = true
+        imgView.contentMode = .ScaleAspectFill
+        
+        return imgView
+    }()
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .Subtitle, reuseIdentifier: reuseIdentifier)
+        setupViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    func setupViews()
+    {
+        addSubview(profileImageView)
+        
+        //constraints for profile iamge ivew
+        profileImageView.leftAnchor.constraintEqualToAnchor(self.leftAnchor, constant: 8).active = true
+        profileImageView.centerYAnchor.constraintEqualToAnchor(self.centerYAnchor).active = true
+        profileImageView.widthAnchor.constraintEqualToConstant(48).active = true
+        profileImageView.heightAnchor.constraintEqualToConstant(48).active = true
+        
+    }
+    
+    
     
 }
 extension NewMsgController{
