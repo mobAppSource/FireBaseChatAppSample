@@ -45,6 +45,7 @@ class MsgController: UITableViewController {
                 
                 if let dict = snapshot.value as? [String: AnyObject]{
                     self.navigationItem.title = dict["name"] as? String
+                    print("Name: \(dict["name"])")
                 }
                 
                 

@@ -88,6 +88,9 @@ class LogInVC: UIViewController {
                 spinner.hideWaitingScreen()
             })
             if error != nil{
+                let alertView = UIAlertController(title: "Warning", message: error!.description, preferredStyle: .Alert)
+                alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alertView, animated: true, completion: nil)
                 print(error?.localizedDescription)
                 return
             }
@@ -100,6 +103,9 @@ class LogInVC: UIViewController {
         
         guard let email = emailTextField.text, password = passwdTextField.text, name = nameTextField.text else {
             spinner.hideWaitingScreen()
+            let alertView = UIAlertController(title: "Warning", message: "Please complete above", preferredStyle: .Alert)
+            alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertView, animated: true, completion: nil)
             print("Form is not valid")
             return
         }
@@ -107,7 +113,13 @@ class LogInVC: UIViewController {
         FIRAuth.auth()?.createUserWithEmail(email, password: password, completion: { (user: FIRUser?, error: NSError?) in
             
             if error != nil{
-                print(error!.localizedDescription)
+                dispatch_async(dispatch_get_main_queue(), {
+                    spinner.hideWaitingScreen()
+                })
+                print("Error: \(error?.localizedDescription)")
+                let alertView = UIAlertController(title: "Warning", message: error!.description, preferredStyle: .Alert)
+                alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alertView, animated: true, completion: nil)
                 
                 return
             }
