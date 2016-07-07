@@ -65,88 +65,7 @@ class LogInVC: UIViewController {
         button.addTarget(self, action: #selector(LogInVC.actionBtn), forControlEvents: .TouchUpInside)
         return button
     }()
-    //action for button
-    func actionBtn()
-    {
-        if loginRegisterSegmentedControl.selectedSegmentIndex == 0{
-            self.actionLogin()
-        }else{
-            self.actionRegister()
-        }
-    }
-    //action for login
-    func actionLogin(){
-        //displaying the spinner
-        spinner.showWaitingScreen("Logging in...", bShowText: true, size: CGSizeMake(150, 100))
-        guard let email = emailTextField.text, password = passwdTextField.text else{
-            print("Form is not valid")
-            return
-        }
-        
-        FIRAuth.auth()?.signInWithEmail(email, password: password, completion: { (user: FIRUser?, error: NSError?) in
-            dispatch_async(dispatch_get_main_queue(), { 
-                spinner.hideWaitingScreen()
-            })
-            if error != nil{
-                let alertView = UIAlertController(title: "Warning", message: error!.description, preferredStyle: .Alert)
-                alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(alertView, animated: true, completion: nil)
-                print(error?.localizedDescription)
-                return
-            }
-            self.dismissViewControllerAnimated(true, completion: nil)
-        })
-    }
-    //action for registering
-    func actionRegister(){
-        spinner.showWaitingScreen("Registering...", bShowText: true, size: CGSizeMake(150, 100))
-        
-        guard let email = emailTextField.text, password = passwdTextField.text, name = nameTextField.text else {
-            spinner.hideWaitingScreen()
-            let alertView = UIAlertController(title: "Warning", message: "Please complete above", preferredStyle: .Alert)
-            alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            self.presentViewController(alertView, animated: true, completion: nil)
-            print("Form is not valid")
-            return
-        }
-        print("Email: Password = \(email): \(password)")
-        FIRAuth.auth()?.createUserWithEmail(email, password: password, completion: { (user: FIRUser?, error: NSError?) in
-            
-            if error != nil{
-                dispatch_async(dispatch_get_main_queue(), {
-                    spinner.hideWaitingScreen()
-                })
-                print("Error: \(error?.localizedDescription)")
-                let alertView = UIAlertController(title: "Warning", message: error!.description, preferredStyle: .Alert)
-                alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(alertView, animated: true, completion: nil)
-                
-                return
-            }
-            //Successfully authenticated user
-            guard let uid = user?.uid else{
-                return
-            }
-            
-            let ref = FIRDatabase.database().referenceFromURL("https://firechatsample-fcdee.firebaseio.com/")
-            let userReference = ref.child("users").child(uid)
-            let values = ["name": name, "email": email]
-            userReference.updateChildValues(values, withCompletionBlock: { (error, ref) in
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    spinner.hideWaitingScreen()
-                })
-                
-                if error != nil{
-                    print(error!.localizedDescription)
-                    return
-                }
-                print("Saved user successfully into FireBase Database")
-                self.dismissViewControllerAnimated(true, completion: nil)
-            })
-            
-        })
-    }
+    
     let nameTextField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Name"
@@ -183,13 +102,16 @@ class LogInVC: UIViewController {
         return tf
     }()
     
-    let profileImgView: UIImageView = {
+    lazy var profileImgView: UIImageView = {
         let imgView = UIImageView()
         imgView.image = UIImage(named: "proImg")
         imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.userInteractionEnabled = true
+        imgView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(actionSelectProImgView)))
         imgView.contentMode = .ScaleAspectFill
         return imgView
     }()
+    
     
     
     override func viewDidLoad() {

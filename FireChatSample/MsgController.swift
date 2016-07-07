@@ -13,7 +13,7 @@ class MsgController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        self.handleLogOut()
         self.checkUserIsLoggedIn()
         let navImg = UIImage(named: "newMsgIcon")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: navImg, style: .Plain, target: self, action: #selector(handleNewMsg))
@@ -38,8 +38,8 @@ class MsgController: UITableViewController {
         }else{
             let uid = FIRAuth.auth()?.currentUser?.uid
             FIRDatabase.database().reference().child("users").child(uid!).observeSingleEventOfType(FIRDataEventType.Value, withBlock: {
-                (snapshot: FIRDataSnapshot) in
-                dispatch_async(dispatch_get_main_queue(), { 
+                (snapshot) in
+                dispatch_async(dispatch_get_main_queue(), {
                     spinner.hideWaitingScreen()
                 })
                 
@@ -48,8 +48,9 @@ class MsgController: UITableViewController {
                     print("Name: \(dict["name"])")
                 }
                 
-                
-                }, withCancelBlock: nil)
+                }, withCancelBlock: { (error) in
+                    print(error.localizedDescription)
+            })
             
         }
     }
