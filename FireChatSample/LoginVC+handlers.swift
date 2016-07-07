@@ -40,6 +40,7 @@ extension LogInVC: UIImagePickerControllerDelegate, UINavigationControllerDelega
                 print(error?.localizedDescription)
                 return
             }
+            self.messageController?.fetchUserAndSetupNavBarTitle()
             self.dismissViewControllerAnimated(true, completion: nil)
         })
     }
@@ -74,9 +75,12 @@ extension LogInVC: UIImagePickerControllerDelegate, UINavigationControllerDelega
                 return
             }
             //Upload image into storage
-            let imgName = NSUUID().UUIDString + ".png"
+//            let imgName = NSUUID().UUIDString + ".png"
+            let imgName = NSUUID().UUIDString + ".jpg"
             let storageRef = FIRStorage.storage().reference().child("profile_images").child(imgName)
-            if let uploadData = UIImagePNGRepresentation(self.profileImgView.image!){
+//            if let uploadData = UIImagePNGRepresentation(self.profileImgView.image!){
+            if let uploadData = self.profileImgView.image?.lowestQualityJPEGNSData{
+                
                 storageRef.putData(uploadData, metadata: nil, completion: {
                     (metaData, error) in
                     if error != nil{
@@ -109,6 +113,8 @@ extension LogInVC: UIImagePickerControllerDelegate, UINavigationControllerDelega
                 return
             }
             print("Saved user successfully into FireBase Database")
+//            self.messageController?.fetchUserAndSetupNavBarTitle()
+            self.messageController?.navigationItem.title = values["name"] as? String
             self.dismissViewControllerAnimated(true, completion: nil)
         })
     }

@@ -89,7 +89,7 @@ class UserCell: UITableViewCell{
         imgView.layer.cornerRadius = 24
         imgView.layer.masksToBounds = true
         imgView.contentMode = .ScaleAspectFill
-        
+          
         return imgView
     }()
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
