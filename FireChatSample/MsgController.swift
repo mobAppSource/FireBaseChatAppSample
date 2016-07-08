@@ -54,13 +54,69 @@ class MsgController: UITableViewController {
             })
             
             if let dict = snapshot.value as? [String: AnyObject]{
-                self.navigationItem.title = dict["name"] as? String
-                print("Name: \(dict["name"])")
+                
+                let user = UserModel()
+                user.setValuesForKeysWithDictionary(dict)
+                self.setupNavBarWithUser(user)
             }
             
             }, withCancelBlock: { (error) in
                 print(error.localizedDescription)
         })
+    }
+    //adding profile image + user name
+    func setupNavBarWithUser(user: UserModel){
+//        self.navigationItem.title = user.name
+        
+        let titleView = UIView()
+        titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
+        
+        //add container view
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        titleView.addSubview(containerView)
+        //add profile image
+        let proImgView = UIImageView()
+        proImgView.translatesAutoresizingMaskIntoConstraints = false
+        proImgView.contentMode = .ScaleAspectFill
+        proImgView.layer.cornerRadius = 15
+        proImgView.layer.masksToBounds = true
+        proImgView.layer.borderColor = UIColor.blueColor().CGColor
+        proImgView.layer.borderWidth = 1
+        proImgView.clipsToBounds = true
+        if let profileImageUrl = user.profileImageUrl{
+            proImgView.loadImageCacheWithURLString(profileImageUrl)
+        }
+        containerView.addSubview(proImgView)
+        //ios 9
+        proImgView.leftAnchor.constraintEqualToAnchor(containerView.leftAnchor).active = true
+        proImgView.centerYAnchor.constraintEqualToAnchor(containerView.centerYAnchor).active = true
+        proImgView.widthAnchor.constraintEqualToConstant(30).active = true
+        proImgView.heightAnchor.constraintEqualToConstant(30).active = true
+        //Add name label
+        let nameLabel = UILabel()
+        nameLabel.text = user.name
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        containerView.addSubview(nameLabel)
+        
+        nameLabel.leftAnchor.constraintEqualToAnchor(proImgView.rightAnchor, constant: 8).active = true
+        nameLabel.centerYAnchor.constraintEqualToAnchor(proImgView.centerYAnchor).active = true
+        nameLabel.rightAnchor.constraintEqualToAnchor(containerView.rightAnchor).active = true
+        nameLabel.heightAnchor.constraintEqualToAnchor(proImgView.heightAnchor).active = true
+        //constratints for container view
+        containerView.centerXAnchor.constraintEqualToAnchor(titleView.centerXAnchor).active = true
+        containerView.centerYAnchor.constraintEqualToAnchor(titleView.centerYAnchor).active = true
+        self.navigationItem.titleView = titleView
+        //Add gesture recognizer
+        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLogController)))
+        
+    }
+    func showChatLogController(){
+        let layout = UICollectionViewFlowLayout()
+        let chatLogController = ChatLogController(collectionViewLayout: layout)
+        navigationController?.pushViewController(chatLogController, animated: true)
     }
     
     func handleLogOut()
