@@ -108,9 +108,15 @@ class MsgController: UITableViewController {
         //constratints for container view
         containerView.centerXAnchor.constraintEqualToAnchor(titleView.centerXAnchor).active = true
         containerView.centerYAnchor.constraintEqualToAnchor(titleView.centerYAnchor).active = true
-        
-        
         self.navigationItem.titleView = titleView
+        //Add gesture recognizer
+        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatLogController)))
+        
+    }
+    func showChatLogController(){
+        let layout = UICollectionViewFlowLayout()
+        let chatLogController = ChatLogController(collectionViewLayout: layout)
+        navigationController?.pushViewController(chatLogController, animated: true)
     }
     
     func handleLogOut()
