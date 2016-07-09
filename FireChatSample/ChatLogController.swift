@@ -82,6 +82,7 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
     
         
     }
+    
     func actionSend(){
         print(inputTextField.text!)
         let ref = FIRDatabase.database().reference().child("messages")

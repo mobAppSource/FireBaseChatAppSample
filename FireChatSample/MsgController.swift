@@ -12,16 +12,55 @@ import Firebase
 class MsgController: UITableViewController {
     
     
-
+    private let cellID = "cellid"
     override func viewDidLoad() {
         super.viewDidLoad()
 //        self.handleLogOut()
         self.checkUserIsLoggedIn()
+        //ObserveMessages
+        observeMessage()
+        
+        
+        
         let navImg = UIImage(named: "newMsgIcon")
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: navImg, style: .Plain, target: self, action: #selector(handleNewMsg))
         
         // Do any additional setup after loading the view, typically from a nib.
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "LogOut", style: .Plain, target: self, action: #selector(MsgController.handleLogOut))
+    }
+    //observeMessage
+    var msgs = [Message]()
+    func observeMessage(){
+        let ref = FIRDatabase.database().reference().child("messages")
+        ref.observeEventType(.ChildAdded, withBlock: { (snapChat) in
+            
+            if let dict = snapChat.value as? [String: AnyObject]{
+                let msg = Message()
+                msg.setValuesForKeysWithDictionary(dict)
+                self.msgs.append(msg)
+                print(msg.text!)
+                dispatch_async(dispatch_get_main_queue(), { 
+                    self.tableView.reloadData()
+                })
+            }
+            
+        }) { (error: NSError) in
+            print(error.localizedDescription)
+        }
+        
+    }
+    //MARK: - 
+    //MARK: table view delegate
+    //MARK: -
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.msgs.count
+    }
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .Subtitle, reuseIdentifier: cellID)
+        let rMsg = self.msgs[indexPath.row]
+        cell.textLabel!.text = rMsg.toID
+        cell.detailTextLabel!.text = rMsg.text
+        return cell
     }
     //action for making new message
     func handleNewMsg()
