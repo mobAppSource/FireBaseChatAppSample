@@ -34,6 +34,7 @@ class NewMsgController: UITableViewController {
             
             if let dict = snapshots.value as? [String: AnyObject]{
                 let user = UserModel()
+                user.id = snapshots.key
                 user.setValuesForKeysWithDictionary(dict)
                 self.users.append(user)
             }
@@ -70,7 +71,12 @@ class NewMsgController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 72
     }
-    
+    var messageController: MsgController?
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        navigationController?.popToRootViewControllerAnimated(true)
+        let selectedUser = self.users[indexPath.item]
+        messageController?.showChatLogControllerForUser(selectedUser)
+    }
     
 }
 //TableViewCell
